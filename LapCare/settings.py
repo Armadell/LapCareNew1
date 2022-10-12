@@ -28,7 +28,7 @@ SECRET_KEY =env('SECRET_KEY')#to get the value of secret key fromn .env
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG',default=True,cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [' LapCare-env.eba-8mbmj3k4.us-west-2.elasticbeanstalk.com']
 
 # Application definition
 

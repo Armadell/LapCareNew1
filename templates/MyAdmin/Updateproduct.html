@@ -1,0 +1,81 @@
+{% extends 'MyAdmin/base.html'%} {% load static%} {% block content%}
+
+<div class="container-fluid mt-5 pt-4">
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-description">
+            {% include 'MyAdmin/includes/alerts.html'%} {% comment %}
+          </p>
+
+          <form class="forms-sample" method="POST">
+            {% csrf_token %} {{form.as_table}}
+            <button type="submit" class="btn btn-primary me-2">Add</button>
+          </form>
+          {% endcomment %}
+          <form class="forms-sample" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>Update product</label>
+              {{form.product_name}}
+            </div>
+            <div class="form-group">
+                <label>Update price</label>
+                {{form.price}}
+              </div>
+              <div class="form-group">
+                <label>Update stock</label>
+                {{form.stock}}
+              </div>
+              <div class="form-group">
+                <label>Update status</label>
+                {{form.available}}
+              </div>
+              <div class="form-group">
+                <label>Update description</label>
+                {{form.description}}
+              </div>
+              
+            <div class="form-group">
+              
+              
+              
+                <label>Update image 1</label>
+                
+                {{form.images}}
+              </div>
+              <div class="form-group">
+                <label>Update image 2</label>
+                {{form.images2}}
+              </div>
+              <div class="form-group">
+                <label>Update image 3</label>
+                {{form.images3}}
+              
+              </div>
+              
+              <div class="form-group">
+                <label>Update image 4</label>
+                {{form.images4}}
+              </div>
+              <div class="form-group">
+                <label>Update category</label>
+                {{form.category}}
+              </div>
+              <div class="form-group">
+                <label>Update brand</label>
+                {{form.newbrand}}
+              </div>
+               <div class="form-group">
+           
+
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,122 @@
+{% extends 'User/base.html' %}
+
+{% load static %}
+{% block content %}
+
+<main role="main">
+<style>
+
+  
+  .carousel-item > img {
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    min-width: 100%;
+    height: 23rem;
+    object-fit: cover;
+    object-position:center ;
+    height: 50%vh;
+    overflow:hidden ;
+}
+</style>
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+       
+        {% for banner in banner_image %}
+        {% if banner.id == 1 %}
+        <img  class="d-block w-100" src="{{banner.banner_image.url}}" alt="First slide">
+        {% endif %}
+        {% endfor  %}
+      </div>
+      <div class="carousel-item">
+        {% for banner in banner_image %}
+    {% if banner.id == 2 %}
+    <img  class="d-block w-100" src="{{banner.banner_image.url}}" alt="First slide">
+    {% endif %}
+    {% endfor  %}
+      </div>
+      <div class="carousel-item">
+        {% for banner in banner_image %}
+    {% if banner.id == 3 %}
+    <img  class="d-block w-100" style="width:100% ;" src="{{banner.banner_image.url}}" alt="First slide">
+    {% endif %}
+    {% endfor  %}
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+   
+  
+    <div class="container marketing text-center ">
+
+     
+     <h1 style=" text-decoration: underline;">Our Products<h1>
+      <a href="{% url 'market'%}" class="btn btn-outline-primary">See all</a>
+      <div class="row pt-4">
+        {% for product in data %}
+       
+        <div class="col-lg-4 col-md-6 ">
+            <div class="w-100 h-100 pt-3 pb-0" class="card card-product-grid" style="border-radius:5%;background-color:#aaaaaa42;">
+             
+                <a href="{{product.get_url}}" class="img-wrap"> <img style="border-radius:10%;height:10rem;width:10rem;" src="{{ product.images.url}}"> </a>
+                <div class="d-flex flex-row align-items-center mb-1">
+                  <!-- <h4 class="mb-1 me-1">{{ product.offer_price }}</h4>
+                  <span class="text-danger"><s>{{ product.product_name}}</s></span> -->
+                </div>
+                <figcaption class="info-wrap">
+                    <a href="{{product.get_url}}" style="font-size:1.3rem;"class=" text-centre">{{ product.product_name}}</a>
+                    <div  style="font-size:1.5rem;" class="price mt-1">{{ product.offer_price }}</div>
+                    <div  style="font-size:1rem;color:rgb(0, 72, 255);" class="price mt-1"><s>{{ product.price}}</s></div> <!-- price-wrap.// -->
+                </figcaption>
+            </div>
+        </div> <!-- col.// -->
+     
+        {% endfor %}
+      </div><!-- /.row -->
+
+
+     
+
+    </div><!-- /.container -->
+    <div class="container marketing text-center " >
+
+     
+      <h1 class='pb-2' style=" text-decoration: underline;">Popular Brands<h1>
+    
+       <div class="row">
+         {% for brands in brand %}
+        
+         <div class="col-lg-4 col-md-6 ">
+             <div class=" p-3 "style=" height:100%;width:100%;">
+              
+                 <a href="#" class="img-wrap"> <img style=""class="d-block w-100 img-fluid rounded" src="{{ brands.brand_image.url}}"> </a>
+                 
+             </div>
+         </div> <!-- col.// -->
+      
+         {% endfor %}
+       </div><!-- /.row -->
+ 
+ 
+      
+ 
+     </div><!-- /.container -->
+
+
+    <!-- FOOTER -->
+  
+
+  </main>
+{% endblock %}

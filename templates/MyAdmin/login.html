@@ -1,0 +1,106 @@
+{% load static%}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>LapCare Admin</title>
+    <!-- plugins:css -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/css/vendor.bundle.base.css'%}"
+    />
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/jvectormap/jquery-jvectormap.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/flag-icon-css/css/flag-icon.min.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/owl-carousel-2/owl.theme.default.min.css'%}"
+    />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css'%}" />
+    <!-- End layout styles -->
+    {% comment %}
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png'%}" />
+    {% endcomment %}
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+ 
+  {% include 'MyAdmin/includes/alerts.html'%}
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div
+            class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg"
+          >
+            <div class="card col-lg-4 mx-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Login</h3>
+
+                <form method="POST" >
+                  {% csrf_token %}
+                  <div class="form-group" >
+                    <label>Email</label>
+                    <input
+                      type="text"
+                      class="form-control p_input"
+                      name="Email"
+                      style="color:white;"
+                    />
+                  </div>
+                  <div class="form-group" >
+                    <label>Password</label>
+                    <input
+                      type="text"
+                      class="form-control p_input"
+                      name="password"
+                      style="color:white;"
+                    />
+                  </div>
+                  <div
+                    class="form-group d-flex align-items-center justify-content-between"
+                  >
+                    <a href="#" class="forgot-pass">Forgot password</a>
+                  </div>
+                  <div class="text-center">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block enter-btn"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+        </div>
+        <!-- row ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+  </body>
+</html>

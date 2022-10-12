@@ -1,0 +1,207 @@
+{% extends 'User/base.html' %}
+{% load static %}
+{% block content %}
+{% if  not cart_items%}
+
+<div class="container m-5 p-5 my-auto text-center mx-auto" style="height:30rem;">
+<h2 class="my-auto mx-auto" style="padding-top:25vh;">Your shopping cart is empty</h2>
+<br>
+<a class="btn btn-secondary" href="{% url 'market'%}">Continue shopping</a>
+</div>
+{% else %}
+
+<section class="h-100 ">
+  
+    <div class="container py-5">
+      
+{% if messages %}
+
+{% for message in messages %}
+<div id="message" class="container">
+<div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error: {% endif %}
+    {{ message }}
+</div>
+</div>
+{% endfor %}
+
+{% endif %}
+      <div class="row d-flex justify-content-center my-4">
+        <div class="col-md-8">
+            {% for cart_item in cart_items %}
+          <div class="card mb-4"  style="background: #1e1e1e ;">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Cart - {{cart_item.quantity}} items</h5>
+            </div>
+            <div class="card-body">
+              <!-- Single item -->
+            
+              <!-- Single item -->
+  
+              {% comment %} <hr class="my-4" /> {% endcomment %}
+  
+              <!-- Single item -->
+              <div class="row">
+                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                  <!-- Image -->
+                  <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                    <img src="{{cart_item.product.images.url}}"
+                      class="w-100" />
+                    <a href="#!">
+                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    </a>
+                  </div>
+                  <!-- Image -->
+                </div>
+  
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                  <!-- Data -->
+                 <a href="{{cart_item.product.get_url}}"> <p><strong>{{cart_item.product.product_name}}</strong></p></a>
+                  
+                 {% if cart_item.variations.all %}
+                 {% for item in cart_item.variations.all %}
+              
+                 <p>{{ item.variation_category | capfirst}}:{{item.variation_value | capfirst}}</p>
+         
+                  {% endfor %}
+                  {% endif %}
+  
+                  <a href="{% url 'delete_cart' cart_item.product.id  cart_item.id%}"  onclick="return confirm('are you sure you want to delete')" style="color:#000;" type="button" class="btn btn-danger btn-md" data-mdb-toggle="tooltip"
+                    title="Remove item">
+                    remove
+                  </a>
+                                
+                 
+                  <!-- Data -->
+                </div>
+                          
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                  <!-- Quantity -->
+                  <div class="d-flex mb-4" style="max-width: 300px">
+                    <a  href="{% url 'remove_cart' cart_item.product.id cart_item.id %}" style="height:2.3rem;" class="btn btn-secondary px-3 me-2"
+                      onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                      <i class='bx bx-minus'></i>
+                    </a>
+  
+                    <div class="form-outline">
+                      <input id="form1" min="0" name="quantity" value="{{cart_item.quantity}}" type="number" class="form-control" />
+                      <label class="form-label" for="form1">Quantity</label>
+                    </div>
+                  <form action="{% url 'add_cart' cart_item.product.id %}" method="POST"> 
+                       {% csrf_token %}
+                      {% for item in cart_item.variations.all %}  {% comment %} we loop through the vairation and  pass key-value to views for check {% endcomment %}
+                       <input type="hidden"  name="{{item.variation_category | lower}}" value="{{item.variation_value | capfirst}}">
+                       {% endfor %}
+                    <button type="submit" style="height:2.3rem;" class="btn btn-secondary px-3 ms-2"
+                      onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                      <i class='bx bx-plus'></i>
+                    </button>
+                  </form>
+                  </div>
+                  <!-- Quantity -->
+  
+                  <!-- Price -->
+                  <p class="text-start text-md-center">
+                    <strong>{{cart_item.sub_total}}</strong>
+                   
+                  </p>
+                  <p class="text-start text-md-center">
+                    <strong class="text-muted">{{cart_item.product.price}}</strong>
+                    
+                  </p>
+                  <!-- Price -->
+                </div>
+              </div>
+              <!-- Single item -->
+            </div>
+          </div>
+          {% endfor %}
+          {% if coupon_code %}
+          <div class="card mb-4">
+         <div class="card-body">
+          <h3>Copon code applied</h3>
+          <h2>discount : ${{coupon_code}}</h2>
+         </div>
+         
+         
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Summary</h5>
+            </div>
+            <div class="card-body" style="background: #1e1e1e;">
+              <ul style="background: #1e1e1e;"class="list-group list-group-flush">
+                <li style="background: #1e1e1e;"
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                  Total price
+                  <span>${{total}}</span>
+                </li>
+                <li style="background: #1e1e1e;"class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  Tax
+                  <span>${{tax}}</span>
+                </li>
+                {% if discount == 0 and discount != "No offer available" %}
+                <li style="background: #1e1e1e;"class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  
+                  <span>No discount available</span>
+                </li>
+                {% else %}
+              
+                <li style="background: #1e1e1e;"class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  Discount
+                  <span>${{discount}}</span>
+                </li>
+                {% endif %}
+                
+                <li style="background: #1e1e1e;"
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                  <div>
+                    <strong>Grand Total</strong>
+                    
+                  </div>
+                  <span><strong>${{grand_total}}</strong></span>
+                </li>
+                <li style="background: #1e1e1e;"
+                class="list-group-item d-flex justify-content-center align-items-center border-0 px-0 mb-3">
+                <div>
+                  <img class="me-2" width="45px"
+                  src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                  alt="Visa" />
+                <img class="me-2" width="45px"
+                  src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                  alt="American Express" />
+                <img class="me-2" width="45px"
+                  src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                  alt="Mastercard" />
+               
+                  
+                </div>
+                
+              </li>
+              </ul>
+              {% if user.is_authenticated%}
+             
+             <form action="{% url 'coupon-apply' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group"> <label>Have coupon?</label>
+                  <div class="input-group"> <input name="coupon_code"type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button type="submit" class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+              </div>
+          </form>
+                {% endif %}
+  
+              <a href="{% url 'check-out'%}" type="button" class="btn btn-primary btn-lg btn-block">
+                Go to checkout
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% endif%}
+  {% endblock %}

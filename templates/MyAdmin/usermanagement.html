@@ -1,0 +1,65 @@
+
+{% extends 'MyAdmin/base.html'%} {% load static%} {% block content%}
+
+<div class='container-fluid'>
+    <div class="col-lg-10 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body" style="padding-top:5.75rem;">
+            <span><h2 style="padding-bottom:1rem;">User Management</h2></span>
+           
+             
+            <p class="card-description"> 
+            </p>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>first name</th>
+                    <th>second name</th>
+                    <th>email</th>
+                    <th>Phone number</th>
+                    <th>Status</th>
+                    <th>block</th>
+                    
+                    
+                    
+                  </tr>
+                </thead>
+                {% for user in data %}
+                <tbody>
+                  <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{ user.email}}</td>
+                    <td>{{ user.phone_number}}</td>
+
+                    
+                    {% if user.is_active %}
+                    <td><i style="color:green;"class="fa fa-check" aria-hidden="true"></i></td>
+                    {% else %}
+                    <td><i style="color:red;"class="fa fa-check" aria-hidden="true"></i></td>
+                    {% endif %}
+                    
+                    {% if user.is_active %}
+                    <td><a href="{% url 'block' user.id %} "><i class="fa fa-unlock" aria-hidden="true"></i></a></td>
+                    {% else %}
+                    <td><a href="{% url 'unblock' user.id%} "><i class="fa fa-lock" aria-hidden="true"></i></a></td>
+                    {% endif %}
+                   
+                    <td></td>
+                    
+                    
+                    
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

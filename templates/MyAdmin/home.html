@@ -1,0 +1,314 @@
+{% extends 'MyAdmin/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+    <div class="row p-0 m-0 proBanner" id="proBanner">
+      <div class="col-md-12 p-0 m-0">
+        
+        
+      </div>
+    </div>
+    <!-- partial:partials/_sidebar.html -->
+   
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_navbar.html -->
+      
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+         
+          <div class="row">
+
+            <script>
+            
+              var endpoint = "{%  url 'chart-data'%}"
+              var defaultData=[]
+              var labels=[];
+              var sales_labels=[]
+             
+              $.ajax({
+                method:"GET",
+                url:endpoint,
+                success:function(data){
+                  labels=data.labels
+                
+                  defaultData=data.default
+                  sales_labels=data.sales_labels
+                  sales_values=data.sales_values
+                  setChart() 
+                 
+                },
+                error:function(){
+                  console.log("error")
+                 
+                }
+              })
+  
+  function setChart(){
+    var ctx = document.getElementById("myChart");
+    var ctx2 = document.getElementById("myChart2");
+    const myChart2 = new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+          labels:sales_labels,
+          datasets: [{
+              label: 'sales',
+              data:sales_values,
+              backgroundColor: [
+              'rgba(0,255,0)',
+                  'rgba(0,0,255)',
+                  'rgba(255,255,0)',
+                  'rgba(0,255,255)',
+                  'rgba(255,0,255)',
+                  'rgba(0,0,128)',
+                  'rgba((128,0,0))',
+                  'rgba(255,69,0)',
+              ],
+              borderColor: [
+                 
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      },
+      options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Product Stock Chart',
+            }
+        }
+    }
+  });
+  const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels:labels,
+          datasets: [{
+              label: 'Order Status',
+             
+              data:defaultData,
+              backgroundColor: [
+                  'rgba(0,255,0)',
+                  'rgba(0,0,255)',
+                  'rgba(255,255,0)',
+                  'rgba(0,255,255)',
+                  'rgba(255,0,255)',
+                  'rgba(0,0,128)',
+                  'rgba((128,0,0))',
+              ],
+          
+              borderWidth: 1
+          }]
+      },
+      options: {
+        legend: {
+                labels: {
+                    fontColor: "White",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                  gridLines: {
+                    color: "#eddedd" 
+                },
+                    ticks: {
+                        fontColor: "#eddedd",
+                        fontSize: 10,
+                        stepSize:0.5,
+                        beginAtZero: true
+                        
+                    }
+                }],
+                xAxes: [{
+                  gridLines: {
+                    color: "#eddedd" 
+                },
+                    ticks: {
+                        fontColor: "white",
+                      
+                        beginAtZero: true
+                    }
+                }]
+            }
+             
+      }
+  });
+  
+  
+  
+             
+}  
+
+
+    
+  
+
+ 
+   </script>
+          
+  </div>
+          <div class="row">
+                <div class="col-sm-6">
+                    <canvas id="myChart" width="400" height="400"  style="background-color:black;"></canvas>
+                  </div>
+                  <div class="col-sm-6">
+                    
+                    <canvas id="myChart2" width="400" height="400"  style="background-color: black;"></canvas>
+                  </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col-sm-4 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5>Total sales</h5>
+                  <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                      <div class="d-flex d-sm-block d-md-flex align-items-center">
+                        <h2 class="mb-0">${{total_sales}}</h2>
+                       
+                      </div>
+                    
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5>Total orders</h5>
+                  <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                      <div class="d-flex d-sm-block d-md-flex align-items-center">
+                        <h2 class="mb-0">{{order_count}}</h2>
+                       
+                      </div>
+                     
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5>Total Products</h5>
+                  <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                      <div class="d-flex d-sm-block d-md-flex text-center align-items-center">
+                        <h2 class="mb-0">{{product_count}}</h2>
+                        
+                      </div>
+                     
+                    </div>
+ 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='container pb-4'>
+          <div class="row">
+          
+            <div class="col-md-6 ">
+              <span><h2 >Sales Details</h2></span>
+            </div>
+            <div class="col-md-3" style="">
+              <a style="height: 3rem;"href="{% url 'sales-csv'%}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Export to CSV</a>
+            </div>
+            <div class="col-md-3 ">
+              <a href="{% url 'sales-pdf'%}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Export to PDF</a>
+            </div>
+          </div>
+          </div>
+          <div class='container'>
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                  <div class="card-body" >
+                   
+                    
+                    
+                     
+                    <p class="card-description"> 
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Order</th>
+                            <th scope="col">Products</th>
+                            <th scope="col">Billing Name</th>
+                            <th scope="col">quantity</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Order Status</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Selling price</th>
+                          
+                            
+                            
+                            
+                          </tr>
+                        </thead>
+                        {% for order in order_products %}
+                       <tbody>
+                      <tr>
+                        <th scope="row">{{order.order.order_number}}</th>
+                        <td>{{order.product.product_name}}</td>
+                        <td>{{order.order.full_name}}</td>
+                        <td>{{order.quantity}}</td>
+                        <td>{{order.order.phone_number}}</td>
+                        <td>{{order.product.price}}</td>
+                        <td>{{order.created_at}}</td>
+                        <td>{{order.order.payment.payment_method}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.order.final_discount}}</td>
+                        <td>{{order.order.order_total | floatformat}}</td>
+                       
+                       
+                        
+                      
+                   
+                      </tr>
+                       
+                 
+                           
+                            <td></td>
+                            
+                            
+                            
+                          </tr>
+                        </tbody>
+                        {% endfor %}
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+
+
+{% endblock %}

@@ -1,0 +1,118 @@
+
+{% extends 'MyAdmin/base.html'%} {% load static%} {% block content%}
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+<div class='container-fluid'>
+    <div class="col-lg-10 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body" style="padding-top:5.75rem;">
+            <span><h2 style="padding-bottom:1rem;">Order Management</h2></span>
+           
+             
+            <p class="card-description"> 
+            </p>
+            <div class="table-responsive">
+              <table  id="ourtable2"  class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Order</th>
+                    <th scope="col">Products</th>
+                    <th scope="col">Billing Name</th>
+                    <th scope="col">quantity</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Order Total</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Ordre Status</th>
+                    <th scope="col">Cancel order</th>
+                    
+                    
+                    
+                  </tr>
+                </thead>
+                {% for order in order_products %}
+               <tbody>
+              <tr>
+                <th scope="row">{{order.order.order_number}}</th>
+                <td>{{order.product.product_name}}</td>
+                <td>{{order.order.full_name}}</td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.order.phone_number}}</td>
+                <td>{{order.order.order_total}}</td>
+                <td>{{order.created_at}}</td>
+                <td>{{order.order.payment.payment_method}}</td>
+                {% if order.order.cancel_order  %}
+              <td></td>
+                  {% else %}
+                  <td>
+                  
+                    <form name="status" action="{% url 'status' order.id %}" method="POST">
+                      {% csrf_token %}
+                      <select class="bg-primary"style="background-color: #1c613a;" class="form-select" class="browser-default custom-select"name="status">
+                        <option value="">{{order.status}}</option>
+                        {% if order.status != 'New'%}
+                        <option value="New">New</option>
+                         {% endif %}
+                         {% if order.status != 'Placed'%}
+                         <option value="Placed">Placed</option>
+                          {% endif %}
+                       
+                          {% if order.status != 'Shipped' %}
+                        
+                        <option class="" value="Shipped">Shipped</option>
+                         {% endif %}
+                          {% if order.status != 'Cancelled'  %}
+    
+                        <option value="Cancelled">Cancelled</option>
+                          {% endif %}
+                          {% if order.status != 'pending'  %}
+    
+                        <option value="Pending">Pending</option>
+                          {% endif %}
+                          {% if order.status != 'Delivered'  %}
+    
+                          <option value="Delivered">Delivered</option>
+                            {% endif %}
+                        
+                      </select>
+                        <input type="submit">
+                        
+                        </form> 
+                      </td>
+                      {% endif %}
+               
+                
+              
+              {%  if order.order.cancel_order %}
+              <td>Order Cancelled</td>
+               {% else %}
+               <td> <a class="btn btn-primary"  role="button"href ="{% url 'admin_cancel_order' order.order.order_number %}">Cancel</a></td>
+             
+               {% endif %}
+              </tr>
+               
+         
+                   
+                    <td></td>
+                    
+                    
+                    
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+    </div>
+</div> 
+<!-- <script>
+$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+
+</script> -->
+
+{% endblock %}

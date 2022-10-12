@@ -1,0 +1,45 @@
+{% extends "MyAdmin/base.html" %}
+
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<div class="content-header sty-one">
+    <h1 class="text-black">ADD BRAND</h1>
+
+</div>
+
+<div class="container-fluid mt-5 pt-4">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                {% include 'MyAdmin/includes/alerts.html'%}
+                <p class="card-description"> 
+                    {% include 'MyAdmin/includes/alerts.html'%}
+            
+                <form class="forms-sample" method="POST" enctype="multipart/form-data">
+                     {% csrf_token %}
+                    <div class="form-group">
+                      <label>Add coupon code</label>
+                      {{coupon_form.coupon_code}}
+                      
+                    </div>
+                    <div class="form-group">
+                        <label>Add discount</label>
+                        {{coupon_form.discount}}
+                      </div>
+                      <div class="form-group">
+                        <label>Availability</label>
+                        {{coupon_form.is_active}}
+                      </div>
+   
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                   
+                  </form>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock content %}

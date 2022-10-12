@@ -1,0 +1,32 @@
+
+
+{% extends 'MyAdmin/base.html'%}
+{% load static%}
+{% block content%}
+
+<div class="container-fluid mt-5 pt-4">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+               
+                <p class="card-description"> 
+                    <p>Are you sure you want to delete "{{item}}"?</p>
+                <form action="{% url 'deleteproduct' item.id%}"class="forms-sample" method="POST">
+                     {% csrf_token %}
+                    <div class="form-group">
+                      
+                      <a class="btn btn-warning" href="{% url 'products' %}">Cancel</a>
+
+                    </div>
+   
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                   
+                  </form>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock%}

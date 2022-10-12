@@ -1,0 +1,32 @@
+{% extends 'MyAdmin/base.html'%} {% load static%} {% block content%}
+
+<div class="container-fluid mt-5 pt-4">
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-description">
+            {% include 'MyAdmin/includes/alerts.html'%} {% comment %}
+          </p>
+
+          <form class="forms-sample" method="POST">
+            {% csrf_token %} {{form.as_table}}
+            <button type="submit" class="btn btn-primary me-2">Add</button>
+          </form>
+          {% endcomment %}
+          <form class="forms-sample" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputUsername1"> Add category</label>
+              {{form.category_name}}
+            </div>
+
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock%}

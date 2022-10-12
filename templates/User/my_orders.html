@@ -1,0 +1,113 @@
+{% extends 'User/base.html' %}
+{% load static %}
+{% block content %}
+<section class="section-conten padding-y bg  mt-4 pt-4" >
+
+    <div class="container  mt-4 pt-4 pb-5" style="background:#1e1e1e;">
+        <div class="row">
+      {% include "User/includes/dashboard_sidebar.html"%}
+
+	<main class="col-md-10">
+		<article class="card">
+		<header class="card-header">
+			<strong class="d-inline-block mr-3">Your order history</strong>
+		
+		</header>
+		<div class="card-body">
+			<div class="row"> 
+
+			
+				<div class="col-md-12">
+          <table class="table table-hover table-responsive">
+            <thead>
+              <tr>
+                <th scope="col">Order</th>
+                <th scope="col">Billing Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Order Total</th>
+                <th scope="col">Date</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Ordre Status</th>
+                <th scope="col">Action</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+                  {% for order in order_products %}
+               
+              <tr>
+                <th scope="row"><a href="{% url 'order-detail' order.order.order_number %}">{{order.order.order_number}}</a></th>
+               
+                <td>{{order.order.full_name}}</td>
+                <td>{{order.order.phone_number}}</td>
+                <td>{{order.order.order_total}}</td>
+                <td>{{order.order.created_at}}</td>
+                <td>{{order.order.payment.payment_method}}</td>
+                <td>{{order.status}}</td>
+                {% if order.status != "Canceled" and order.status != "Delivered" %}
+               <td> <a data-toggle="modal" data-target="#exampleModal"class="btn btn-primary"  role="button" href ="#">Cancel</a></td>
+               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div style="background-color:#1e1e1e;"class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirmation for cancellation</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                    Are you sure You want to cancel?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     
+                      <a class="btn btn-primary"  role="button" href ="{% url 'cancel_order' order.id %}">Cancel</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% elif order.status == "Delivered"%}
+          
+             <td> <a data-toggle="modal" data-target="#exampleModal1"class="btn btn-primary"  role="button" href ="#">Return</a></td>
+             <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div style="background-color:#1e1e1e;"class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation for Return the Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                  Are you sure You want to return the Product?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   
+                    <a class="btn btn-primary"  role="button" href ="{% url 'return_order' order.id %}">Yes</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+               {% else %}
+               <td>Order Cancelled</td>
+               {% endif %}
+              </tr>
+               
+          {% endfor %}
+            
+            </tbody>
+          </table>
+				</div>
+			</div> <!-- row.// -->
+		</div> <!-- card-body .// -->
+		</article> <!-- order-group.// --> 
+	</main>
+</div> <!-- row.// -->
+</div>
+    <!--Modal bootstrap-->
+
+   
+ 
+    </section>
+{% endblock %}

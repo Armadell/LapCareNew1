@@ -1,0 +1,290 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="icon" href="../../../../favicon.ico" />
+
+    <title>LapCare</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="{% static 'user/dist1/css/bootstrap.min.css'%}"
+      rel="stylesheet"
+    />
+    <style>
+      a {
+        color: white;
+      }
+      #nav-header-custom {
+        background: #000 !important;
+      }
+      body {
+        background: black;
+      }
+      html,
+      html {
+        height: 100%;
+      }
+      body {
+        min-height: 100%;
+      }
+      /* GLOBAL STYLES
+-------------------------------------------------- */
+      /* Padding below the footer and lighter body text */
+
+      body {
+        padding-top: 3rem;
+        background-color:#1e1e1e;
+        font-family: Arial, sans-serif;
+        color:#fff;
+      }
+      html *
+{
+  
+  
+}
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited{
+    background-color:#00C9C8 !important;
+}
+p,span,div{
+  font-family: Georgia, serif !important;
+  
+}
+h2,h3,h4{
+  font-size: 1rem;
+}
+      /* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+      /* Carousel base class */
+      .carousel {
+        margin-bottom: 4rem;
+      }
+      /* Since positioning the image, we need to help out the caption */
+      .carousel-caption {
+        bottom: 3rem;
+        z-index: 10;
+      }
+
+      /* Declare heights because of positioning of img element */
+      .carousel-item {
+        height: 32rem;
+        background-color: #777;
+      }
+      .carousel-item > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        height: 32rem;
+      }
+
+      /* MARKETING CONTENT
+-------------------------------------------------- */
+
+      /* Center align the text within the three columns below the carousel */
+      .marketing .col-lg-4 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+      .marketing h2 {
+        font-weight: 400;
+      }
+      .marketing .col-lg-4 p {
+        margin-right: 0.75rem;
+        margin-left: 0.75rem;
+      }
+
+      /* Featurettes
+------------------------- */
+
+      .featurette-divider {
+        margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+      }
+
+      /* Thin out the marketing headings */
+      .featurette-heading {
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -0.05rem;
+      }
+
+      /* RESPONSIVE CSS
+-------------------------------------------------- */
+
+      @media (min-width: 40em) {
+        /* Bump up size of carousel content */
+        .carousel-caption p {
+          margin-bottom: 1.25rem;
+          font-size: 1.25rem;
+          line-height: 1.4;
+        }
+
+        .featurette-heading {
+          font-size: 50px;
+        }
+      }
+
+      @media (min-width: 62em) {
+        .featurette-heading {
+          margin-top: 7rem;
+        }
+      }
+      @media (min-width: 996px) {
+        #form-style {
+          width: 25rem;
+        }
+        @media screen and (max-width: 931px) {
+          #search-size {
+            width: 1rem;
+          }
+        }
+      }
+      @media (max-width: 996px) {
+        #form-style {
+          width: 100%;
+        }
+      }
+      .card {
+        background-color:#1e1e1e;
+        border: solid 0.5px black;
+      }
+      .card-body {
+        background-color:#1e1e1e;
+      }
+
+      .gradient-custom {
+        /* fallback for old browsers */
+        background: #1e1e1e;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(
+          to right,
+          rgba(106, 17, 203, 1),
+          rgba(37, 117, 252, 1)
+        );
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: #333;
+      }
+
+      .list-group-item {
+        background-color: #333;
+      }
+      #header_product_view {
+        color: white;
+        font-weight: 500;
+      }
+
+      .badge {
+        padding-left: 9px;
+        padding-right: 9px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        border-radius: 9px;
+      }
+
+      .label-warning[href],
+      .badge-warning[href] {
+        background-color: #c67605;
+      }
+      #lblCartCount {
+        font-size: 12px;
+        background: #ff0000;
+        color: #fff;
+        padding: 0 5px;
+        vertical-align: top;
+        margin-left: -10px;
+      }
+      .carousel-item {
+        height: 23rem;
+      }
+      /*image zooming css*/
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .img-zoom-container {
+        position: relative;
+        display: flex;
+      
+      }
+
+      .img-zoom-lens {
+        position: absolute;
+        border: 1px solid #1e1e1e;
+        /*set the size of the lens:*/
+        width: 40px;
+        height: 40px;
+        z-index: 5;
+      }
+
+      .img-zoom-result {
+        position: absolute;
+        top:200 px;
+        border: 1px solid #d4d4d4;
+        /*set the size of the result div:*/
+        width: 300px;
+        height: 300px;
+      }
+    </style>
+    <!-- Custom styles for this template -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+    {% comment %}
+    <link
+      rel="stylesheet"
+      href="{% static 'https://use.fontawesome.com/releases/v5.7.0/css/all.css'%}"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous"
+    />
+    {% endcomment %}
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AS-rOhqkLrLCOVsm1L903HsVVhg61m9Dzw3tN3fSEYVyOQTvHKMfmAasNSHXP5__aujZbKeapzkQQbVL&currency=USD"></script>
+
+    <!--including js for image zooming-->
+    {% include "User/includes/scripts.html" %}
+  </head>
+
+  <body>
+    {% include "User/includes/header.html"%} {% block content%} {% load static
+    %} {% endblock %}
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="{% static 'user/assets1/js/vendor/popper.min.js'%}"></script>
+    <script src="{% static 'user/dist1/js/bootstrap.min.js'%}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // messages timeout for 10 sec
+        setTimeout(function () {
+          $("#message").fadeOut("slow");
+        }, 1000); // <-- time in milliseconds, 1000 =  1 sec
+      });
+    </script>
+    {% include "User/includes/footer.html" %}
+  </body>
+</html>

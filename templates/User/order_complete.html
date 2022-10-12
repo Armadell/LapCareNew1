@@ -1,0 +1,150 @@
+{% extends 'User/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container" style="margin-top: 50px;">
+    <center><i class="fas fa-check-circle" style="font-size: 72px;margin-bottom: 20px;color: #28A745;"></i></center>
+    <h2 class="text-center">Payment Successful</h2>
+	<br>
+	<div class="text-center">
+		<a href="{% url 'market' %}" class="btn btn-success">Shop more</a>
+	</div>
+</div>
+
+
+<div id="pt" class="container p-5 m-5" style="background-color:#333;">
+    <div class="row gutters p-5">
+    	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    		<div class="card" >
+    			<div class="card-body p-2" style="background-color:#333;">
+    				<div class="invoice-container">
+    					<div class="invoice-header">
+    
+    						
+    
+    						<!-- Row start -->
+    						<div class="row gutters pb-2">
+    							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                                    <a class="navbar-brand" href="{% url 'home'%}"><img style="height:2rem;weight:2rem;"src="{% static 'assets/images/logo.svg'%}"></a>
+    							</div>
+    							
+    						</div>
+    						<!-- Row end -->
+    
+    						<!-- Row start -->
+    						<div class="row gutters p-2">
+    							<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+    								<div class="invoice-details">
+    									<ul class="list-unstyled">
+                                            <li><strong>Order</strong>#{{order_number}}</li>
+                                            <li><strong>Transaction ID</strong>#{{transID}}</li>
+                                            <li><strong>Order Date</strong>#{{order.created_at}}</li>
+                                            <li><strong>Payment Status</strong>#{{payment.status}}</li>
+                                            
+                                        </ul>
+    								</div>
+    							</div>
+    							<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+    								<div class="invoice-details">
+    									<div class="invoice-num">
+    										<div>Invoice to</div>
+    										<div>{{order.full_name}}</div>
+                                            <div>{{order.full_address}}</div>
+                                            <div>{{order.city}},{{order.state}}</div>
+                                            <div>{{order.country}}</div>
+    									</div>
+    								</div>													
+    							</div>
+    						</div>
+    						<!-- Row end -->
+    
+    					</div>
+    
+    					<div class="invoice-body">
+    
+    						<!-- Row start -->
+    						<div class="row gutters">
+    							<div class="col-lg-12 col-md-12 col-sm-12">
+    								<div class="table-responsive">
+    									<table class="table custom-table m-0">
+    										<thead>
+    											<tr>
+    												<th>Items</th>
+    												<th>Product ID</th>
+    												<th>Quantity</th>
+													{% if discount %}
+													<th>Discount</th>
+													{% endif %}
+    												<th>Total</th>
+    											</tr>
+    										</thead>
+    										<tbody>
+                                                {% for item in order_products %}
+    											<tr>
+    												<td>
+    													
+    													<p class="m-0 text-muted">
+    													{{item.product.product_name}}
+    													</p>
+                                                       {% if item.variations.all %}
+                                                            {% for i in item.variations.all %}
+                                            
+                                                            {{ i.variation_category | capfirst}}:{{i.variation_value | capfirst}}<br>
+                                                    
+                                                            {% endfor %}
+                                                        {% endif %}
+    												</td>
+    												<td>{{item.product.id}}</td>
+    												<td>{{item.quantity}}</td>
+													{% if discount %}
+													<td>{{item.discount}}</td>
+													{% endif %}
+    												<td>{{item.product_price}}</td>
+    											</tr>
+    											{% endfor %}
+    												
+    											
+    										</tbody>
+    									</table>
+                                        
+    								</div>
+                                    <ul class="list-unstyled  d-flex align-items-end flex-column bd-highlight mb-3 pt-4 p-2">
+                                        <li>sub total : {{sub_total}}</li>
+                                        <li>Tax: {{order.tax}}</li>
+										<li>Discount: {{reduction}}</li>
+                                        <li><strong>Grand Total</strong>:{{order.order_total}}</li>
+                                        
+                                        
+                                    </ul>
+    							</div>
+    						</div>
+    						<!-- Row end -->
+    
+    					</div>
+    
+    					<div class="invoice-footer">
+    						Thank you for your Business.
+							
+    					</div>
+                        <button onclick="myfun('pt')" class="btn btn-primary mt-3">Get Bill</button>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    function myfun(pa){
+    var bk = document.body.innerHTML;
+    var dv = document.getElementById(pa).innerHTML;
+        document.body.innerHTML = dv;
+        window.print();
+    }
+
+</script>
+
+
+{% endblock %}
